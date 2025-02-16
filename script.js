@@ -11,6 +11,7 @@ const highScoreDisplay = document.getElementById("highScore");
 const timerDisplay = document.getElementById("timer");
 const clickSound = document.getElementById("clickSound");
 const difficultySelect = document.getElementById("difficulty");
+const timeLimitInput = document.getElementById("timeLimit");
 
 highScoreDisplay.textContent = highScore;
 
@@ -24,7 +25,6 @@ function moveBox() {
 
     box.style.left = `${randomX}px`;
     box.style.top = `${randomY}px`;
-    box.style.backgroundColor = getRandomColor(); // Change color
 }
 
 // Function to generate random colors
@@ -35,7 +35,7 @@ function getRandomColor() {
 
 // Function to start the countdown timer
 function startTimer() {
-    timeLeft = 30;
+    timeLeft = parseInt(timeLimitInput.value);
     timerDisplay.textContent = timeLeft;
 
     countdown = setInterval(() => {
@@ -71,6 +71,12 @@ function startGame() {
     score = 0;
     scoreDisplay.textContent = score;
     speed = parseInt(difficultySelect.value);
+    timeLeft = parseInt(timeLimitInput.value);
+
+    if (timeLeft < 30 || timeLeft > 600) {
+        alert("Please enter a time between 30 seconds and 10 minutes.");
+        return;
+    }
 
     clearInterval(gameLoop);
     clearInterval(countdown);
@@ -84,6 +90,8 @@ box.addEventListener("click", function () {
     clickSound.play(); // Play sound on click
     score++;
     scoreDisplay.textContent = score;
+
+    box.style.backgroundColor = getRandomColor(); // Change color only on click
 
     // Increase speed every 5 points
     if (score % 5 === 0 && speed > 300) {
