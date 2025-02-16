@@ -9,9 +9,23 @@
 <body>
     <h1>Catch the Moving Box</h1>
     <p>Score: <span id="score">0</span></p>
+    <p>High Score: <span id="highScore">0</span></p>
+    <p>Time Left: <span id="timer">30</span> sec</p>
+
+    <label for="difficulty">Difficulty:</label>
+    <select id="difficulty">
+        <option value="1000">Easy</option>
+        <option value="700">Medium</option>
+        <option value="400">Hard</option>
+    </select>
+    <button onclick="startGame()">Start Game</button>
+
     <div id="gameArea">
         <div id="box"></div>
     </div>
+
+    <audio id="clickSound" src="click.mp3"></audio>
+
     <script src="script.js"></script>
 </body>
 </html>
