@@ -13,6 +13,9 @@ const clickSound = document.getElementById("clickSound");
 const difficultySelect = document.getElementById("difficulty");
 const timeLimitInput = document.getElementById("timeLimit");
 
+let isPaused = false; // Track pause state
+let soundEnabled = true; // Track sound state
+
 highScoreDisplay.textContent = highScore;
 
 // Function to move the box randomly
@@ -85,17 +88,65 @@ function startGame() {
     gameLoop = setInterval(moveBox, speed);
 }
 
+// Function to toggle game start/end
+function toggleGame() {
+    const startButton = document.getElementById("startButton");
+    if (startButton.textContent === "Start") {
+        startGame();
+        startButton.textContent = "End";
+        startButton.classList.add("running");
+    } else {
+        endGame();
+        startButton.textContent = "Start";
+        startButton.classList.remove("running");
+    }
+}
+
+// Function to toggle pause/resume
+function togglePause() {
+    const pauseButton = document.getElementById("pauseButton");
+    if (isPaused) {
+        gameLoop = setInterval(moveBox, speed);
+        countdown = setInterval(() => {
+            timeLeft--;
+            timerDisplay.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                endGame();
+            }
+        }, 1000);
+        box.style.pointerEvents = "auto"; // Enable box clicks
+        pauseButton.textContent = "⏸"; // Pause symbol
+    } else {
+        clearInterval(gameLoop);
+        clearInterval(countdown);
+        box.style.pointerEvents = "none"; // Disable box clicks
+        pauseButton.textContent = "▶"; // Play symbol
+    }
+    isPaused = !isPaused;
+}
+
+// Function to toggle sound
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    const soundButton = document.getElementById("toggleSoundButton");
+    soundButton.textContent = soundEnabled ? "🔊" : "🔇"; // Update button symbol
+}
+
 // Click event for catching the box
 box.addEventListener("click", function () {
-    clickSound.play(); // Play sound on click
+    if (isPaused) return; // Prevent clicks during pause
+    if (soundEnabled) {
+        clickSound.play(); // Play sound only if enabled
+    }
     score++;
     scoreDisplay.textContent = score;
 
     box.style.backgroundColor = getRandomColor(); // Change color only on click
 
-    // Increase speed every 5 points
-    if (score % 5 === 0 && speed > 300) {
-        speed -= 100;
+    // Gradual speed increase
+    if (score % 5 === 0 && speed > 500) {
+        speed -= 50; // Reduce speed increment
         clearInterval(gameLoop);
         gameLoop = setInterval(moveBox, speed);
     }

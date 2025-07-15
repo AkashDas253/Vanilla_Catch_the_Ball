@@ -12,23 +12,31 @@
     <p>High Score: <span id="highScore">0</span></p>
     <p>Time Left: <span id="timer">30</span> sec</p>
 
-    <label for="difficulty">Difficulty:</label>
-    <select id="difficulty">
-        <option value="1000">Easy</option>
-        <option value="700">Medium</option>
-        <option value="400">Hard</option>
-    </select>
+    <div>
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+            <option value="1000">Easy</option>
+            <option value="700">Medium</option>
+            <option value="400">Hard</option>
+        </select>
+    </div>
 
-    <label for="timeLimit">Time Limit (Seconds):</label>
-    <input type="number" id="timeLimit" min="30" max="600" value="30">
+    <div>
+        <label for="timeLimit">Time Limit (Seconds):</label>
+        <input type="number" id="timeLimit" min="30" max="600" value="30">
+    </div>
 
-    <button onclick="startGame()">Start Game</button>
+    <div style="display: flex; justify-content: center; gap: 10px;">
+        <button id="startButton" onclick="toggleGame()">Start</button>
+        <button id="pauseButton" onclick="togglePause()">⏸</button>
+        <button id="toggleSoundButton" onclick="toggleSound()">🔊</button>
+    </div>
 
     <div id="gameArea">
         <div id="box"></div>
     </div>
 
-    <audio id="clickSound" src="click.mp3"></audio>
+    <audio id="clickSound" src="click_sound.midi"></audio>
 
     <script src="script.js"></script>
 </body>
