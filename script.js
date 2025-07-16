@@ -93,6 +93,8 @@ function startGame() {
     clearInterval(gameLoop);
     clearInterval(countdown);
 
+    box.style.pointerEvents = "auto"; // Ensure the box is clickable
+
     startTimer();
     gameLoop = setInterval(moveBox, speed);
 }
