@@ -145,6 +145,33 @@ function toggleSound() {
     soundButton.textContent = soundEnabled ? "🔊" : "🔇"; // Update button symbol
 }
 
+// Function to restart the game
+function restartGame() {
+    clearInterval(gameLoop);
+    clearInterval(countdown);
+
+    score = 0;
+    timeLeft = parseInt(timeLimitInput.value);
+    speed = parseInt(difficultySelect.value);
+
+    scoreDisplay.textContent = score;
+    timerDisplay.textContent = timeLeft;
+
+    box.style.pointerEvents = "auto"; // Ensure the box is clickable
+    box.style.backgroundColor = "red"; // Reset box color
+
+    startTimer();
+    gameLoop = setInterval(moveBox, speed);
+
+    const startButton = document.getElementById("startButton");
+    startButton.textContent = "End";
+    startButton.classList.add("running");
+
+    const pauseButton = document.getElementById("pauseButton");
+    pauseButton.textContent = "⏸"; // Reset pause button
+    isPaused = false; // Reset pause state
+}
+
 // Click event for catching the box
 box.addEventListener("click", function () {
     if (isPaused) return; // Prevent clicks during pause
