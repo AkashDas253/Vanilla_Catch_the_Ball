@@ -137,7 +137,7 @@ function toggleSound() {
 box.addEventListener("click", function () {
     if (isPaused) return; // Prevent clicks during pause
     if (soundEnabled) {
-        clickSound.play(); // Play sound only if enabled
+        clickSound.play(); // Play MP3 sound
     }
     score++;
     scoreDisplay.textContent = score;
