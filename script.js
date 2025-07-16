@@ -67,6 +67,15 @@ function endGame() {
     clearInterval(countdown);
     updateHighScore();
     alert("Game Over! Your final score is: " + score);
+
+    // Reset game state
+    isPaused = false; // Ensure pause state is reset
+    const pauseButton = document.getElementById("pauseButton");
+    pauseButton.textContent = "⏸"; // Reset pause button to default state
+
+    const startButton = document.getElementById("startButton");
+    startButton.textContent = "Start"; // Reset start button to default state
+    startButton.classList.remove("running"); // Remove running class
 }
 
 // Function to start the game
@@ -91,14 +100,15 @@ function startGame() {
 // Function to toggle game start/end
 function toggleGame() {
     const startButton = document.getElementById("startButton");
+    const pauseButton = document.getElementById("pauseButton");
+
     if (startButton.textContent === "Start") {
         startGame();
         startButton.textContent = "End";
         startButton.classList.add("running");
+        pauseButton.textContent = "⏸"; // Ensure pause button is reset
     } else {
         endGame();
-        startButton.textContent = "Start";
-        startButton.classList.remove("running");
     }
 }
 
